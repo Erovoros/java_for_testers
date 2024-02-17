@@ -5,7 +5,6 @@ public class Hello {
         try {
 
             var z = calculate();
-            System.out.println(z);
             System.out.println("Hello, world");
 
         } catch(ArithmeticException exception) {
@@ -16,7 +15,7 @@ public class Hello {
 
     private static int calculate() {
         var x = 1;
-        var y = 1;
+        var y = 0;
         var z = divide(x, y);
         return z;
     }
