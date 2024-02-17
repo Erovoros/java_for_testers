@@ -37,7 +37,7 @@ public class TriangleTests {
     @Test
     void cannotCreateInvalidTriangle() {
         try {
-            new Triangle(3.0, 5.0, 8.0);
+            new Triangle(- 3.0, 5.0, 8.0);
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //OK
