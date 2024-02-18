@@ -34,7 +34,7 @@ public class GroupCreationTests {
             driver.findElement(By.linkText("groups")).click();
         }
 
-        driver.findElement(By.linkText("groups")).click();
+
         driver.findElement(By.name("new")).click();
         driver.findElement(By.id("content")).click();
         driver.findElement(By.name("group_name")).click();
@@ -63,7 +63,7 @@ public class GroupCreationTests {
             driver.findElement(By.linkText("groups")).click();
         }
 
-        driver.findElement(By.linkText("groups")).click();
+
         driver.findElement(By.name("new")).click();
         driver.findElement(By.id("content")).click();
         driver.findElement(By.name("group_name")).click();
@@ -74,5 +74,7 @@ public class GroupCreationTests {
         driver.findElement(By.linkText("groups")).click();
 
     }
+
+
 
 }
