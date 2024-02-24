@@ -32,7 +32,7 @@ public class GroupHelper {
         manager.driver.findElement(By.name("group_footer")).sendKeys(group.footer());
         manager.driver.findElement(By.name("submit")).click();
         manager.driver.findElement(By.linkText("groups")).click();
-        
+
     }
 
     public void removeGroup() {
