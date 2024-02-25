@@ -72,6 +72,8 @@ public class GroupHelper extends HelperBase{
         click(By.linkText("groups"));
     }
 
+
+
     private void submitGroupModification() {
         click(By.name("update"));
     }

@@ -3,13 +3,51 @@ package manager;
 import model.ContactData;
 import org.openqa.selenium.By;
 
-public class ContactHelper {
-    private final ApplicationManager manager;
+public class ContactHelper extends HelperBase{
 
-    public ContactHelper(ApplicationManager applicationManager) {
 
-        this.manager = applicationManager;
+    public ContactHelper(ApplicationManager manager) {
+
+        super(manager);
     }
+
+    public void createContact(ContactData contact) {
+        openAddNewPage();
+        fillContactForm(contact);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public void removeContact() {
+        openHomePage();
+        selectContact();
+        removeSelectedContact();
+        returnToHomePage();
+    }
+
+
+
+
+
+    private void removeSelectedContact() {
+        manager.driver.findElement(By.cssSelector(".left:nth-child(8) > input")).click();
+    }
+
+    private void selectContact() {
+        manager.driver.findElement(By.name("selected[]")).click();
+    }
+
+    private void returnToHomePage() {
+        manager.driver.findElement(By.linkText("home")).click();
+    }
+
+    private void submitContactCreation() {
+        manager.driver.findElement(By.cssSelector("input:nth-child(75)")).click();
+    }
+
+
+
+
 
     public void openAddNewPage() {
         if (!manager.isElementPresent(By.name("new"))) {
@@ -19,7 +57,7 @@ public class ContactHelper {
 
     public void openHomePage() {
         if (!manager.isElementPresent(By.name("searchstring"))) {
-            manager.driver.findElement(By.linkText("home")).click();
+            returnToHomePage();
         }
     }
 
@@ -30,8 +68,9 @@ public class ContactHelper {
 
 
 
-    public void createContact(ContactData contact) {
-        openAddNewPage();
+
+
+    private void fillContactForm(ContactData contact) {
         manager.driver.findElement(By.name("firstname")).click();
         manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstName());
         manager.driver.findElement(By.name("lastname")).click();
@@ -42,16 +81,7 @@ public class ContactHelper {
         manager.driver.findElement(By.name("mobile")).sendKeys(contact.mobile());
         manager.driver.findElement(By.name("email")).click();
         manager.driver.findElement(By.name("email")).sendKeys(contact.email());
-        manager.driver.findElement(By.cssSelector("input:nth-child(75)")).click();
-        manager.driver.findElement(By.linkText("home")).click();
-
-
     }
 
-    public void removeContact() {
-        openHomePage();
-        manager.driver.findElement(By.name("selected[]")).click();
-        manager.driver.findElement(By.cssSelector(".left:nth-child(8) > input")).click();
-        manager.driver.findElement(By.linkText("home")).click();
-    }
+
 }
