@@ -3,13 +3,14 @@ package tests;
 import model.ContactData;
 import org.junit.jupiter.api.Test;
 
-public class ContactCreationTest extends TestBase{
+public class ContactCreationTests extends TestBase{
 
 
     @Test
     public void canCreateContact() {
 
-        app.contacts().createContact(new ContactData("first name", "last name", "address", "email", "phone"));
+        app.contacts().createContact(new ContactData("some first name", "some last name",
+                "some address", "some email", "some phone"));
 
     }
 
