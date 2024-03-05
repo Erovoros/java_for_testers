@@ -47,8 +47,25 @@ public class ContactHelper extends HelperBase{
         returnToHomePage();
     }
 
+
+
+
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        openHomePage();
+        selectContact(contact);
+        initContactModification();
+        fillContactForm(modifiedContact);
+        submitContactModification();
+        returnToHomePage();
+    }
+
     private void removeSelectedContacts() {
         manager.driver.findElement(By.cssSelector(".left:nth-child(8) > input")).click();
+    }
+
+    private void submitContactModification() {
+        click(By.name("update"));
+
     }
 
 
@@ -92,23 +109,21 @@ public class ContactHelper extends HelperBase{
         return manager.isElementPresent(By.name("selected[]"));
     }
 
+    private void initContactModification() {
+
+        click(By.cssSelector("img[title=Edit]"));
+    }
+
 
 
 
 
     private void fillContactForm(ContactData contact) {
-        manager.driver.findElement(By.name("firstname")).click();
-        manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstName());
-        manager.driver.findElement(By.name("lastname")).click();
-        manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastName());
-        manager.driver.findElement(By.name("address")).click();
-        manager.driver.findElement(By.name("address")).sendKeys(contact.address());
-        manager.driver.findElement(By.name("mobile")).click();
-        manager.driver.findElement(By.name("mobile")).sendKeys(contact.mobile());
-        manager.driver.findElement(By.name("email")).click();
-        manager.driver.findElement(By.name("email")).sendKeys(contact.email());
+        type(By.name("firstname"), contact.firstName());
+        type(By.name("lastname"), contact.lastName());
+
     }
-//доделать
+
     public List<ContactData> getList() {
         openHomePage();
         var contacts = new ArrayList<ContactData>();
