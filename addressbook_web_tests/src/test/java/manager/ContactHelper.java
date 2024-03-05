@@ -118,24 +118,27 @@ public class ContactHelper extends HelperBase{
             var checkbox = entry.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
 
-            String lastName;
+
+            String lastName = null;
+            String firstName = null;
 
 
 
             var tds = manager.driver.findElements(By.tagName("td"));
-            for (int i = 0; i < tds.size(); i++) {
-                if (i == 1) {
-                  lastName = tds.get(i).toString();
+            for (int i = 0; i <= 2; i ++){
 
+                if (i == 1) {
+                    lastName = tds.get(i).getText();
                 }
                 if (i == 2) {
-                  var firstName = String.valueOf(tds.get(i));
+                    firstName = tds.get(i).getText();
                 }
+
             }
 
 
 
-            contacts.add(new ContactData().withId(id).withLastName(lastName));
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contacts;
     }
