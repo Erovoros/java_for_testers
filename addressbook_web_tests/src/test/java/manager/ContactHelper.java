@@ -52,11 +52,15 @@ public class ContactHelper extends HelperBase{
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openHomePage();
-        selectContact(contact);
-        initContactModification();
+        initContactModification(contact);
         fillContactForm(modifiedContact);
         submitContactModification();
         returnToHomePage();
+    }
+
+    private void initContactModification(ContactData contact) {
+
+        click(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.id())));
     }
 
     private void removeSelectedContacts() {
@@ -109,10 +113,7 @@ public class ContactHelper extends HelperBase{
         return manager.isElementPresent(By.name("selected[]"));
     }
 
-    private void initContactModification() {
 
-        click(By.cssSelector("img[title=Edit]"));
-    }
 
 
 
@@ -128,32 +129,16 @@ public class ContactHelper extends HelperBase{
         openHomePage();
         var contacts = new ArrayList<ContactData>();
         var entries = manager.driver.findElements(By.name("entry"));
-        for (var entry: entries) {
-
+        for (var entry : entries) {
             var checkbox = entry.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
 
+            var tds = entry.findElements(By.tagName("td"));
 
-            String lastName = null;
-            String firstName = null;
+                String lastName = tds.get(1).getText();
+                String firstName = tds.get(2).getText();
+                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
 
-
-
-            var tds = manager.driver.findElements(By.tagName("td"));
-            for (int i = 0; i <= 2; i ++){
-
-                if (i == 1) {
-                    lastName = tds.get(i).getText();
-                }
-                if (i == 2) {
-                    firstName = tds.get(i).getText();
-                }
-
-            }
-
-
-
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contacts;
     }
