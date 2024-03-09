@@ -122,6 +122,7 @@ public class ContactHelper extends HelperBase{
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
+        attach(By.name("photo"), contact.photo());
 
     }
 

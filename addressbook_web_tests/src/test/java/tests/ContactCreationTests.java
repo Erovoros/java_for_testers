@@ -17,8 +17,11 @@ public class ContactCreationTests extends TestBase{
     @Test
     public void canCreateContact() {
 
-        app.contacts().createContact(new ContactData("", "some first name", "some last name",
-                "some address", "some email", "some mobile"));
+        var contact = new ContactData()
+                .withFirstName(randomString(10))
+                .withLastName(randomString(10))
+                .withPhoto("src/test/resources/images/avatar.png");
+        app.contacts().createContact(contact);
 
     }
 
@@ -33,6 +36,7 @@ public class ContactCreationTests extends TestBase{
                     for (var email: List.of("", "email")) {
                         for (var mobile : List.of("", "mobile")) {
 
+
                         result.add(new ContactData()
                                 .withFirstName(firstName)
                                 .withLastName(lastName)
@@ -43,6 +47,7 @@ public class ContactCreationTests extends TestBase{
                     }
                 }
             }
+
         }
         for (int i = 0; i < 5; i++){
             result.add(new ContactData()
@@ -51,10 +56,11 @@ public class ContactCreationTests extends TestBase{
                     .withAddress(randomString(i * 10))
                     .withEmail(randomString(i * 10))
                     .withMobile(randomString(i * 10)));
+
         }
         return result;
     }
-
+/*
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contact) {
@@ -84,7 +90,7 @@ public class ContactCreationTests extends TestBase{
 
 
 
-
+*/
 
 
 

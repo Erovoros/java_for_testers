@@ -16,7 +16,7 @@ public class ContactModificationTests extends TestBase{
     void canModifyContact() {
 
         if (!app.contacts().isContactPresent()) {
-            app.contacts().createContact(new ContactData("", "first name", "last name", "address", "email", "phone"));
+            app.contacts().createContact(new ContactData("", "first name", "last name", "address", "email", "phone", "photo"));
 
         }
         var oldContacts = app.contacts().getList();
