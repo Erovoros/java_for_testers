@@ -35,5 +35,4 @@ public record ContactData (String id, String firstName, String lastName, String 
 
 
 
-
 }
