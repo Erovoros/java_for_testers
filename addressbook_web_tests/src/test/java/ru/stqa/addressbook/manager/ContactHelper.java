@@ -121,7 +121,7 @@ public class ContactHelper extends HelperBase{
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
-        attach(By.name("photo"), contact.photo());
+    //    attach(By.name("photo"), contact.photo());
 
     }
 
@@ -137,7 +137,7 @@ public class ContactHelper extends HelperBase{
 
                 String lastName = tds.get(1).getText();
                 String firstName = tds.get(2).getText();
-                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withPhoto("src/test/resources/images/man.png"));
+                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
 
         }
         return contacts;

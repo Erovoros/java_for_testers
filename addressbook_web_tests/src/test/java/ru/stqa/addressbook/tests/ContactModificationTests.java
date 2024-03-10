@@ -16,13 +16,13 @@ public class ContactModificationTests extends TestBase{
     void canModifyContact() {
 
         if (!app.contacts().isContactPresent()) {
-            app.contacts().createContact(new ContactData("", "first name", "last name", "address", "email", "phone", "src/test/resources/images/man.png"));
+            app.contacts().createContact(new ContactData("", "first name", "last name", "address", "email", "phone"));
 
         }
         var oldContacts = app.contacts().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
-        var testData = new ContactData().withFirstName("Modified first name").withLastName("Modified last name").withPhoto("src/test/resources/images/man.png");
+        var testData = new ContactData().withFirstName("Modified first name").withLastName("Modified last name");
         app.contacts().modifyContact(oldContacts.get(index), testData);
         var newContacts = app.contacts().getList();
         var expectedList = new ArrayList<>(oldContacts);
