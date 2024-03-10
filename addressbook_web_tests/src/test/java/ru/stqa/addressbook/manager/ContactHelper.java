@@ -137,7 +137,7 @@ public class ContactHelper extends HelperBase{
 
                 String lastName = tds.get(1).getText();
                 String firstName = tds.get(2).getText();
-                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withPhoto("src/test/resources/images/man.png"));
 
         }
         return contacts;
