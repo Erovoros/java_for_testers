@@ -88,12 +88,12 @@ public class ContactCreationTests extends TestBase{
     public void canCreateMultipleContacts(ContactData contact) {
 
 
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
 
 
         app.contacts().createContact(contact);
 
-        var newContacts = app.contacts().getList();
+        var newContacts =app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
 
@@ -101,7 +101,8 @@ public class ContactCreationTests extends TestBase{
         newContacts.sort(compareById);
 
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() -1).id()).withAddress("").withEmail("").withMobile(""));
+        var maxId = newContacts.get(newContacts.size() - 1).id();
+        expectedList.add(contact.withId(maxId).withAddress("").withEmail("").withMobile(""));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
 
