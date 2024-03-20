@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
+
+
 
 public class ContactCreationTests extends TestBase{
 
@@ -25,7 +28,7 @@ public class ContactCreationTests extends TestBase{
         var contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10));
-                //.withPhoto(randomFile("src/test/resources/images/"));
+        //.withPhoto(randomFile("src/test/resources/images/"));
         app.contacts().createContact(contact);
 
     }
@@ -48,6 +51,48 @@ public class ContactCreationTests extends TestBase{
         app.contacts().createContact(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+
+    }
+
+    @Test
+    public void canAddContactToGroup() {
+
+
+
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+
+        }
+
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData("", "first name", "last name", "address", "email", "phone"));
+
+        }
+
+
+
+
+
+        var contacts = app.hbm().getContactList();
+        var rnd = new Random();
+        var index = rnd.nextInt(contacts.size());
+
+
+
+
+
+        var group = app.hbm().getGroupList().get(0);
+
+        var oldContacts = app.hbm().getContactsInGroup(group);
+
+
+
+        app.contacts().addContactToGroup(contacts.get(index), group);
+        var newContacts = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldContacts.size(), newContacts.size()-1);
+
+
+
 
     }
 

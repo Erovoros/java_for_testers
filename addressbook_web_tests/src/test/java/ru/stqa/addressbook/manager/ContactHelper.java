@@ -49,7 +49,26 @@ public class ContactHelper extends HelperBase{
         returnToHomePage();
     }
 
+    public void addContactToGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectGroupToAdd(group);
+        returnToHomePage();
+
+
+
+    }
+
+
+    private void selectGroupToAdd(GroupData group) {
+        click(By.name("to_group"));
+        click(By.name("add"));
+
+    }
+
+
     private void selectGroup(GroupData group) {
+
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }
 
@@ -135,7 +154,7 @@ public class ContactHelper extends HelperBase{
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
-    //    attach(By.name("photo"), contact.photo());
+        //    attach(By.name("photo"), contact.photo());
 
     }
 
@@ -149,9 +168,9 @@ public class ContactHelper extends HelperBase{
 
             var tds = entry.findElements(By.tagName("td"));
 
-                String lastName = tds.get(1).getText();
-                String firstName = tds.get(2).getText();
-                contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            String lastName = tds.get(1).getText();
+            String firstName = tds.get(2).getText();
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
 
         }
         return contacts;
