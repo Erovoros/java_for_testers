@@ -79,7 +79,27 @@ public class ContactHelper extends HelperBase{
         returnToHomePage();
     }
 
+    public void removeContactInGroup(ContactData contact) {
+        openHomePage();
+        selectGroupToRemove();
+        removeSelectedContactFromGroup();
+        returnToHomePage();
 
+
+    }
+
+    private void removeSelectedContactFromGroup() {
+        manager.driver.findElement(By.name("selected[]")).click();
+        manager.driver.findElement(By.name("remove")).click();
+
+
+    }
+
+    private void selectGroupToRemove() {
+        //      click(By.name("group"));
+        manager.driver.findElement(By.cssSelector("select[name='group'] option:nth-child(3)")).click();
+
+    }
 
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
