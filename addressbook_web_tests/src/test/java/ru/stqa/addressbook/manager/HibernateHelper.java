@@ -11,6 +11,8 @@ import ru.stqa.addressbook.model.GroupData;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.stqa.addressbook.tests.TestBase.app;
+
 public class HibernateHelper extends HelperBase {
 
     private SessionFactory sessionFactory;
@@ -133,6 +135,15 @@ public class HibernateHelper extends HelperBase {
 
         });
     }
+
+    public boolean isContactInGroup(ContactData contact, GroupData group) {
+       List<ContactData> contactsInGroup = app.hbm().getContactsInGroup(group);
+
+
+        return contactsInGroup.contains(contact);
+    }
+
+
 
 
 }

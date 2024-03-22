@@ -17,6 +17,27 @@ import jakarta.persistence.Table;
         public String firstname;
         public String lastname;
         public String address;
+        public String middlename = "";
+        public String nickname = "";
+        public String company = "";
+        public String title = "";
+        public String home = "";
+        public String work = "";
+        public String fax = "";
+        public String email = "";
+        public String email2 = "";
+        public String email3 = "";
+        public String homepage = "";
+        public String bmonth = "";
+        public String byear = "";
+        public String ayear = "";
+        public String address2 = "";
+        public String mobile = "";
+
+
+
+
+
 
         public ContactRecord() {}
 

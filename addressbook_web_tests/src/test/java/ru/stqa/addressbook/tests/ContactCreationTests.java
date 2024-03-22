@@ -58,42 +58,50 @@ public class ContactCreationTests extends TestBase{
     public void canAddContactToGroup() {
 
 
+        ContactData contactToAdd = null;
+        GroupData groupToAdd = null;
 
         if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+            app.hbm().createGroup(new GroupData("", "new group", "", ""));
+            groupToAdd = app.hbm().getGroupList().get((int) (app.hbm().getGroupCount() - 1));
+        } else {
+            groupToAdd = app.hbm().getGroupList().get(0);
+        }
+        for (ContactData contact : app.hbm().getContactList()) {
+
+            if (!app.hbm().isContactInGroup(contact, groupToAdd)) {
+                contactToAdd = contact;
+
+                break;
+            }
+
 
         }
 
-        if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "first name", "last name", "address", "email", "phone"));
 
+        if (contactToAdd == null) {
+            var contact = new ContactData()
+                    .withFirstName(CommonFunctions.randomString(10))
+                    .withLastName(CommonFunctions.randomString(10));
+            //.withPhoto(randomFile("src/test/resources/images/"));
+
+
+            var group = app.hbm().getGroupList().get(0);
+
+            var oldRelated = app.hbm().getContactsInGroup(group);
+            app.contacts().createContact(contact, group);
+            var newRelated = app.hbm().getContactsInGroup(group);
+            Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+
+
+        } else {
+
+
+            var oldContacts = app.hbm().getContactsInGroup(groupToAdd);
+            app.contacts().addContactToGroup(contactToAdd, groupToAdd);
+            var newContacts = app.hbm().getContactsInGroup(groupToAdd);
+            Assertions.assertEquals(oldContacts.size() + 1, newContacts.size());
         }
-
-
-
-
-
-        var contacts = app.hbm().getContactList();
-        var rnd = new Random();
-        var index = rnd.nextInt(contacts.size());
-
-
-
-
-
-        var group = app.hbm().getGroupList().get(0);
-
-        var oldContacts = app.hbm().getContactsInGroup(group);
-
-
-
-        app.contacts().addContactToGroup(contacts.get(index), group);
-        var newContacts = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldContacts.size(), newContacts.size()-1);
-
-
-
-
     }
 
 
@@ -155,6 +163,8 @@ public class ContactCreationTests extends TestBase{
 
 
     }
+
+
 
 
 
