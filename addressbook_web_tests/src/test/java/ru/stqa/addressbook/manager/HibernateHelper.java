@@ -10,6 +10,7 @@ import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.stqa.addressbook.tests.TestBase.app;
 
@@ -33,12 +34,8 @@ public class HibernateHelper extends HelperBase {
         }
 
         static List<GroupData> convertList(List<GroupRecord> records) {
-        List<GroupData> result = new ArrayList<>();
-        for (var record: records) {
-            result.add(convert(record));
-        }
-        return result;
-        }
+        return records.stream().map(HibernateHelper::convert).collect(Collectors.toList());
+    }
 
     private static GroupData convert(GroupRecord record) {
         return new GroupData("" + record.id, record.name, record.header, record.footer);
@@ -53,11 +50,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<ContactData> convertContactList(List<ContactRecord> records) {
-        List<ContactData> result = new ArrayList<>();
-        for (var record: records) {
-            result.add(convert(record));
-        }
-        return result;
+        return records.stream().map(HibernateHelper::convert).collect(Collectors.toList());
     }
 
   private static ContactData convert(ContactRecord record) {
