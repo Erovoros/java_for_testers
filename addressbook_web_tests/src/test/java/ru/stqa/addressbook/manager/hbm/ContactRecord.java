@@ -21,8 +21,8 @@ import jakarta.persistence.Table;
         public String nickname = "";
         public String company = "";
         public String title = "";
-        public String home = "";
-        public String work = "";
+        public String home;
+        public String work;
         public String fax = "";
         public String email = "";
         public String email2 = "";
@@ -32,7 +32,8 @@ import jakarta.persistence.Table;
         public String byear = "";
         public String ayear = "";
         public String address2 = "";
-        public String mobile = "";
+        public String mobile;
+        public String phone2;
 
 
 
