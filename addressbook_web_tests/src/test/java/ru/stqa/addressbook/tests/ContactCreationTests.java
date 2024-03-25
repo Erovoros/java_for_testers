@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 
-
-public class ContactCreationTests extends TestBase{
+public class ContactCreationTests extends TestBase {
 
 
     @Test
@@ -74,37 +73,22 @@ public class ContactCreationTests extends TestBase{
 
                 break;
             }
-
-
         }
 
 
+        var oldContacts = app.hbm().getContactsInGroup(groupToAdd);
         if (contactToAdd == null) {
             var contact = new ContactData()
                     .withFirstName(CommonFunctions.randomString(10))
                     .withLastName(CommonFunctions.randomString(10));
-            //.withPhoto(randomFile("src/test/resources/images/"));
-
-
-            var group = app.hbm().getGroupList().get(0);
-
-            var oldRelated = app.hbm().getContactsInGroup(group);
-            app.contacts().createContact(contact, group);
-            var newRelated = app.hbm().getContactsInGroup(group);
-            Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
-
-
+            app.contacts().createContact(contact, groupToAdd);
         } else {
-
-
-            var oldContacts = app.hbm().getContactsInGroup(groupToAdd);
             app.contacts().addContactToGroup(contactToAdd, groupToAdd);
-            var newContacts = app.hbm().getContactsInGroup(groupToAdd);
-            Assertions.assertEquals(oldContacts.size() + 1, newContacts.size());
         }
+
+        var newContacts = app.hbm().getContactsInGroup(groupToAdd);
+        Assertions.assertEquals(oldContacts.size() + 1, newContacts.size());
     }
-
-
 
 
     public static List<ContactData> contactProvider() throws IOException {
@@ -130,7 +114,8 @@ public class ContactCreationTests extends TestBase{
 //        }
 
         var mapper = new XmlMapper();
-        var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {});
+        var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {
+        });
         result.addAll(value);
 
         return result;
@@ -146,7 +131,7 @@ public class ContactCreationTests extends TestBase{
 
         app.contacts().createContact(contact);
 
-        var newContacts =app.hbm().getContactList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
 
@@ -160,17 +145,7 @@ public class ContactCreationTests extends TestBase{
         Assertions.assertEquals(newContacts, expectedList);
 
 
-
-
     }
-
-
-
-
-
-
-
-
 
 
 }
