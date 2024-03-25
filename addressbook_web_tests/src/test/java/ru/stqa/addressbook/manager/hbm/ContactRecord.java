@@ -24,14 +24,14 @@ import jakarta.persistence.Table;
         public String home;
         public String work;
         public String fax = "";
-        public String email = "";
-        public String email2 = "";
-        public String email3 = "";
+        public String email;
+        public String email2;
+        public String email3;
         public String homepage = "";
         public String bmonth = "";
         public String byear = "";
         public String ayear = "";
-        public String address2 = "";
+        public String address2;
         public String mobile;
         public String phone2;
 
