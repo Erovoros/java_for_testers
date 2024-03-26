@@ -81,10 +81,11 @@ public class ContactCreationTests extends TestBase {
             var contact = new ContactData()
                     .withFirstName(CommonFunctions.randomString(10))
                     .withLastName(CommonFunctions.randomString(10));
-            app.contacts().createContact(contact, groupToAdd);
-        } else {
-            app.contacts().addContactToGroup(contactToAdd, groupToAdd);
+            app.contacts().createContact(contact);
+            contactToAdd = app.hbm().getContactList().get((int)(app.hbm().getContactCount() - 1));
         }
+            app.contacts().addContactToGroup(contactToAdd, groupToAdd);
+
 
         var newContacts = app.hbm().getContactsInGroup(groupToAdd);
         Assertions.assertEquals(oldContacts.size() + 1, newContacts.size());
