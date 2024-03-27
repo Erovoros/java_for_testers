@@ -10,14 +10,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
 
 
     public ContactHelper(ApplicationManager manager) {
 
         super(manager);
     }
+
     public int getCount() {
         openHomePage();
         return manager.driver.findElements(By.name("selected[]")).size();
@@ -32,7 +35,7 @@ public class ContactHelper extends HelperBase{
 
     private void selectAllContacts() {
         var checkboxes = manager.driver.findElements(By.name("selected[]"));
-        for (var checkbox: checkboxes) {
+        for (var checkbox : checkboxes) {
             checkbox.click();
         }
     }
@@ -57,7 +60,6 @@ public class ContactHelper extends HelperBase{
         selectContact(contact);
         selectGroupToAdd(group);
         returnToHomePage();
-
 
 
     }
@@ -128,9 +130,6 @@ public class ContactHelper extends HelperBase{
     }
 
 
-
-
-
     private void removeSelectedContact() {
         manager.driver.findElement(By.cssSelector(".left:nth-child(8) > input")).click();
     }
@@ -146,9 +145,6 @@ public class ContactHelper extends HelperBase{
     private void submitContactCreation() {
         manager.driver.findElement(By.cssSelector("input:nth-child(75)")).click();
     }
-
-
-
 
 
     public void openAddNewPage() {
@@ -169,11 +165,6 @@ public class ContactHelper extends HelperBase{
     }
 
 
-
-
-
-
-
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
@@ -181,6 +172,9 @@ public class ContactHelper extends HelperBase{
         type(By.name("email2"), contact.email2());
         type(By.name("email3"), contact.email3());
         type(By.name("address"), contact.address());
+        type(By.name("home"), contact.home());
+        type(By.name("mobile"), contact.mobile());
+        type(By.name("work"), contact.work());
 
 
         //    attach(By.name("photo"), contact.photo());
@@ -212,9 +206,9 @@ public class ContactHelper extends HelperBase{
     }
 
     public Map<String, String> getPhones() {
-        var result = new HashMap<String,String>();
+        var result = new HashMap<String, String>();
         List<WebElement> rows = manager.driver.findElements(By.name("entry"));
-        for (WebElement row: rows) {
+        for (WebElement row : rows) {
             var id = row.findElement(By.tagName("input")).getAttribute("id");
             var phones = row.findElements(By.tagName("td")).get(5).getText();
             result.put(id, phones);
@@ -222,14 +216,24 @@ public class ContactHelper extends HelperBase{
         return result;
     }
 
-    public String getEmails(ContactData contact) {
-        return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[5]",contact.id()))).getText();
+    public Map<String, String> getAll() {
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            var id = row.findElement(By.tagName("input")).getAttribute("id");
+            var phones = row.findElements(By.tagName("td")).get(5).getText();
+            var emails = row.findElements(By.tagName("td")).get(4).getText();
+            var address = row.findElements(By.tagName("td")).get(3).getText();
 
-    }
 
-    public String getAddress(ContactData contact) {
-        return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[4]",contact.id()))).getText();
+            var all = Stream.of(phones, emails, address)
+                    .filter(s -> s != null && !"".equals(s))
+                    .collect(Collectors.joining("\n"));
+
+            result.put(id, all);
+        }
+        return result;
     }
 }
+
+
